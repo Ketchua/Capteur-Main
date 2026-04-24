@@ -21,6 +21,7 @@ import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
 import komposten.leapjna.example.VisualiserBackend.State;
+import komposten.leapjna.leapc.enums.eLeapHandType;
 import komposten.leapjna.leapc.events.LEAP_IMAGE_EVENT;
 import komposten.leapjna.leapc.events.LEAP_TRACKING_EVENT;
 
@@ -211,6 +212,20 @@ class VisualiserExample
 		public void onFrame(LEAP_TRACKING_EVENT frameEvent)
 		{
 			renderPanel.setFrameData(frameEvent);
+			var nbMain = frameEvent.nHands;
+			for(int cnt=0;cnt<nbMain; cnt++)
+			{
+				var main = frameEvent.getHands()[cnt];
+				if(main.getType() == eLeapHandType.Left) return;
+				var paume=main.palm;
+				var annulaire = main.digits.ring.is_extended;
+				var pouce = main.digits.thumb.is_extended;
+				var majeur = main.digits.middle.is_extended;
+				var oriculaire = main.digits.pinky.is_extended;
+				var index = main.digits.index.is_extended;
+				//System.out.println("Main " + Float.toString(paume.position.x) + " " + Float.toString(paume.position.y) + " " + Float.toString(paume.position.z));
+				System.out.println(pouce + index + majeur + annulaire + oriculaire);
+			}
 		}
 
 
@@ -221,9 +236,90 @@ class VisualiserExample
 		}
 	};
 
+	// class Point
+	// {
+	// 	private double x, y;
+
+	// 	public double Y
+	// 	{
+	// 		get { return  y; }
+	// 		set {  y = value; }
+	// 	}
+		
+	// 	public double X
+	// 	{
+	// 		get { return x; }
+	// 		set { x = value; }
+	// 	}
+
+	// 	public Point(double x=0, double y=0 )
+	// 	{
+	// 		this.x = x;
+	// 		this.y = y;
+	// 	}
+		
+	// 	public double Distance(Point origine)
+	// 	{
+	// 		double x0 = origine.x, y0 = origine.y;
+	// 		return Math.Sqrt(((x - x0) * (x - x0)) + ((y - y0) * (y - y0))); // Racine( (x-x0)² + (y-y0)² )
+
+	// 	}
+	// }
+
+	// class Cercle
+	// {
+	// 	private Point centre;
+	// 	private double rayon;
+
+	// 	public double Rayon
+	// 	{
+	// 		get { return rayon; }
+	// 		set { rayon = value; }
+	// 	}
+	// 	public Point Centre
+	// 	{
+	// 		get { return centre; }
+	// 		set { centre = value; }
+	// 	}
+	// 	public Cercle(Point centre, double rayon=0)
+	// 	{
+	// 		this.centre = centre;
+	// 		this.rayon = rayon;
+	// 	}
+	// 	public Cercle()
+	// 	{
+	// 		centre = new Point();
+	// 		centre.X = 0;
+	// 		centre.Y = 0;
+	// 		rayon = 0;
+	// 	}
+	// 	public double getPerimetre()
+	// 	{
+	// 		return 2 * Math.PI * rayon;
+	// 	}
+	// 	public double getSurface()
+	// 	{
+	// 		return Math.PI * rayon * rayon;
+	// 	}
+	// 	public bool appartient(Point Pt)
+	// 	{
+	// 		if (Pt.Distance(centre) <= rayon)
+	// 		{
+	// 			return true;
+	// 		}
+	// 		else
+	// 		{
+	// 			return false;
+	// 		}
+	// 	}
+	// }
+
+
 
 	public static void main(String[] args)
 	{
 		new VisualiserExample();
+		
 	}
 }
+
