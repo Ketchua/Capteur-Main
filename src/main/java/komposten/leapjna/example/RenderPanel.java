@@ -221,21 +221,21 @@ class RenderPanel extends JPanel
 	{
 		g2d.setStroke(new BasicStroke(4, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		g2d.drawLine((int) finger.metacarpal.prev_joint.x + offsetX,
-				(int) -finger.metacarpal.prev_joint.y + offsetY,
+				(int) finger.metacarpal.prev_joint.z + offsetY,
 				(int) finger.metacarpal.next_joint.x + offsetX,
-				(int) -finger.metacarpal.next_joint.y + offsetY);
+				(int) finger.metacarpal.next_joint.z + offsetY);
 		g2d.drawLine((int) finger.proximal.prev_joint.x + offsetX,
-				(int) -finger.proximal.prev_joint.y + offsetY,
+				(int) finger.proximal.prev_joint.z + offsetY,
 				(int) finger.proximal.next_joint.x + offsetX,
-				(int) -finger.proximal.next_joint.y + offsetY);
+				(int) finger.proximal.next_joint.z + offsetY);
 		g2d.drawLine((int) finger.intermediate.prev_joint.x + offsetX,
-				(int) -finger.intermediate.prev_joint.y + offsetY,
+				(int) finger.intermediate.prev_joint.z + offsetY,
 				(int) finger.intermediate.next_joint.x + offsetX,
-				(int) -finger.intermediate.next_joint.y + offsetY);
+				(int) finger.intermediate.next_joint.z + offsetY);
 		g2d.drawLine((int) finger.distal.prev_joint.x + offsetX,
-				(int) -finger.distal.prev_joint.y + offsetY,
+				(int) finger.distal.prev_joint.z + offsetY,
 				(int) finger.distal.next_joint.x + offsetX,
-				(int) -finger.distal.next_joint.y + offsetY);
+				(int) finger.distal.next_joint.z + offsetY);
 		drawPosition(finger.distal.next_joint, 0.5f, g2d, offsetX, offsetY);
 	}
 
@@ -243,9 +243,9 @@ class RenderPanel extends JPanel
 	private void drawPosition(LEAP_VECTOR position, float scale, Graphics2D g2d,
 			int offsetX, int offsetY)
 	{
-		int size = (int) ((position.z + 200) / 400 * 20 * scale + 5);
+		int size = (int) ((position.y + 200) / 400 * 20 * scale + 5);
 		g2d.fillRect((int) (position.x + offsetX - size / 2f),
-				(int) (-position.y + offsetY - size / 2d), size, size);
+				(int) (position.z + offsetY - size / 2d), size, size);
 	}
 
 

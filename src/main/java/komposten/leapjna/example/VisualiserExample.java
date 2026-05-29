@@ -21,6 +21,7 @@ import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
 import komposten.leapjna.example.VisualiserBackend.State;
+import komposten.leapjna.leapc.enums.eLeapHandType;
 import komposten.leapjna.leapc.events.LEAP_IMAGE_EVENT;
 import komposten.leapjna.leapc.events.LEAP_TRACKING_EVENT;
 
@@ -210,7 +211,27 @@ class VisualiserExample
 		@Override
 		public void onFrame(LEAP_TRACKING_EVENT frameEvent)
 		{
+
+
 			renderPanel.setFrameData(frameEvent);
+			var nbMain = frameEvent.nHands;
+			for(int cnt=0;cnt<nbMain; cnt++)
+			{
+				var main = frameEvent.getHands()[cnt];
+				if(main.getType() == eLeapHandType.Left) return;
+				var paume=main.palm;
+				var annulaire = main.digits.ring.is_extended;
+				var pouce = main.digits.thumb.is_extended;
+				var majeur = main.digits.middle.is_extended;
+				var oriculaire = main.digits.pinky.is_extended;
+				var index = main.digits.index.is_extended;
+				System.out.println("Main " + Float.toString(paume.position.x) + " " + Float.toString(paume.position.y) + " " + Float.toString(paume.position.z));
+				//System.out.println(pouce + index + majeur + annulaire + oriculaire);
+				
+
+					float xPaume = paume.position.x;
+					float zPaume = paume.position.y;
+			}
 		}
 
 
@@ -221,9 +242,14 @@ class VisualiserExample
 		}
 	};
 
+	
+
+
 
 	public static void main(String[] args)
 	{
 		new VisualiserExample();
+		
 	}
 }
+
