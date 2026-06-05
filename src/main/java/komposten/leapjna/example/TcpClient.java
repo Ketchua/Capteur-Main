@@ -84,13 +84,31 @@ public class TcpClient {
 
     private void send() {
         try {
-            //TODO Utiliser danger
+            
             byte[] frame = new byte[3];
-            synchronized (this) {
+            
+            if (danger > 0) {
+                synchronized (this) {
+                frame[0] = 0;
+                frame[1] = 0;
+                frame[2] = 0;
+                } 
+            } 
+            else {
+
+                //Gestion de la saturation
+                x = (byte)Math.min(x,100);
+                x = (byte)Math.max(x,-100);
+                y = (byte)Math.min(y,100);
+                y = (byte)Math.max(y,-100);
+
+                synchronized (this) {
                 frame[0] = x;
                 frame[1] = y;
                 frame[2] = v;
+                }
             }
+
             dataOutputStream.write(frame, 0, frame.length);
         } catch (IOException exc) {
             System.out.println("Failed to send data : " + exc.getMessage());

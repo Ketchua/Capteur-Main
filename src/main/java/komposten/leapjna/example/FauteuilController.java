@@ -104,7 +104,10 @@ public class FauteuilController {
             }
 
         }
-        client.setValues(0, 0, (byte)vitesse);
+        
+        
+        client.setValues((byte)xPaume,(byte)zPaume,(byte)vitesse);
+
         return (int) vitesse;
     }
 

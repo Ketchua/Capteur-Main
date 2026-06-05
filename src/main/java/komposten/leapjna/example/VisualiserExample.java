@@ -53,7 +53,7 @@ class VisualiserExample
 					leapJnaThread = new Thread(backend::start, "LeapJna Thread");
 					leapJnaThread.start();
 					fauteuil.startLidar();
-					fauteuil.client.connect("192.168.27.12", 6340);
+					fauteuil.client.connect("192.168.1.20", 6340);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 				{
