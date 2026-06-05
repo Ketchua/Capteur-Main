@@ -21,7 +21,6 @@ import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
 import komposten.leapjna.example.VisualiserBackend.State;
-import komposten.leapjna.example.fauteuilController.Point;
 import komposten.leapjna.leapc.enums.eLeapHandType;
 import komposten.leapjna.leapc.events.LEAP_IMAGE_EVENT;
 import komposten.leapjna.leapc.events.LEAP_TRACKING_EVENT;
@@ -37,7 +36,7 @@ class VisualiserExample
 
 	private boolean imagesEnabled;
 
-	private fauteuilController fauteuil = new fauteuilController();
+	private FauteuilController fauteuil = new FauteuilController();
 
 	public VisualiserExample()
 	{
@@ -53,6 +52,8 @@ class VisualiserExample
 				{
 					leapJnaThread = new Thread(backend::start, "LeapJna Thread");
 					leapJnaThread.start();
+					fauteuil.startLidar();
+					fauteuil.client.connect("192.168.27.12", 6340);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 				{
@@ -235,6 +236,7 @@ class VisualiserExample
 				int vitesse = fauteuil.gererMouvement(paume.position.x,paume.position.z,nbDoigtsEtendus);
 				
 				System.out.println("Vitesse : " + vitesse);
+				
 				
 			}
 		}
