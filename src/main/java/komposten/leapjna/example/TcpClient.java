@@ -26,11 +26,17 @@ public class TcpClient {
     /**
     * Thread-safe setter for x, y, and v.
     */
-    public synchronized void setValues(byte x, byte y, byte v) {
-        this.x = x;
-        this.y = y;
-        this.v = v;
+    public synchronized void setValues(float x, float y, float v) {
         System.out.println("Values updated: x=" + x + ", y=" + y + ", v=" + v);
+        //Gestion de la saturation
+        x = Math.min(x,100);
+        x = Math.max(x,-100);
+        y = Math.min(y,100);
+        y = Math.max(y,-100);
+        this.x = (byte)x;
+        this.y = (byte)y;
+        this.v = (byte)v;
+        System.out.println("Values set: x=" + this.x + ", y=" + this.y + ", v=" + this.v);
     }
 
     public synchronized void setDanger(int danger) {
@@ -96,11 +102,7 @@ public class TcpClient {
             } 
             else {
 
-                //Gestion de la saturation
-                x = (byte)Math.min(x,100);
-                x = (byte)Math.max(x,-100);
-                y = (byte)Math.min(y,100);
-                y = (byte)Math.max(y,-100);
+
 
                 synchronized (this) {
                 frame[0] = x;

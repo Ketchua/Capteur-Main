@@ -53,7 +53,7 @@ class VisualiserExample
 					leapJnaThread = new Thread(backend::start, "LeapJna Thread");
 					leapJnaThread.start();
 					fauteuil.startLidar();
-					fauteuil.client.connect("192.168.1.20", 6340);
+					fauteuil.client.connect("192.168.1.28", 6340);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 				{
@@ -218,9 +218,9 @@ class VisualiserExample
 			renderPanel.setFrameData(frameEvent);
 			int nbMain = frameEvent.nHands;
 
-			for(int cnt=0; cnt < nbMain; cnt++)
+			if(nbMain == 1)
 			{
-				var main = frameEvent.getHands()[cnt];
+				var main = frameEvent.getHands()[0];
 				if(main.getType() == eLeapHandType.Left) return;
 				var paume=main.palm;
 				int annulaire = main.digits.ring.is_extended;
@@ -232,12 +232,12 @@ class VisualiserExample
 				//System.out.println(pouce + index + majeur + annulaire + oriculaire);
 				
 				int nbDoigtsEtendus = pouce + index + majeur + annulaire + oriculaire;
-
 				int vitesse = fauteuil.gererMouvement(paume.position.x,paume.position.z,nbDoigtsEtendus);
-				
 				System.out.println("Vitesse : " + vitesse);
-				
-				
+			}
+			else{
+				fauteuil.arret();
+				System.out.println("Arret");
 			}
 		}
 

@@ -12,6 +12,11 @@ public class FauteuilController {
     float xOrigine;
     float zOrigine;
 
+    void arret() {
+        client.setValues(0,0,1);
+    }
+
+
     class Point {
 
         private float x, y;
@@ -86,27 +91,38 @@ public class FauteuilController {
 
             if (vPaume <= zoneMorte) {
                 vitesse = 0;
+                client.setValues(0,0,vitesse);
+
             }
             if (vPaume >= zoneMorte) {
                 vitesse = v1;
+                client.setValues(zPaume,xPaume,vitesse);
+
             }
             if (vPaume >= zonev1) {
                 vitesse = v2;
+                client.setValues(zPaume,xPaume,vitesse);
+
             }
             if (vPaume >= zonev2) {
                 vitesse = v3;
+                client.setValues(zPaume,xPaume,vitesse);
+
             }
             if (vPaume >= zonev3) {
                 vitesse = v4;
+                client.setValues(zPaume,xPaume,vitesse);
+
             }
             if (vPaume >= zonev4) {
                 vitesse = v5;
+                client.setValues(zPaume,xPaume,vitesse);
             }
-
+            
         }
-        
-        
-        client.setValues((byte)xPaume,(byte)zPaume,(byte)vitesse);
+    else {
+    client.setValues(0,0,vitesse);
+    }
 
         return (int) vitesse;
     }
